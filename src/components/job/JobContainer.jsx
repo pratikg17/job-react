@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAllJobs , fetchJobs} from '../../features/job/jobSlice';
+import JobList from "./JobList";
 
 const JobContainer = () => {
     const [filter, setFilter] = useState({limit: 10, offset: 0});
@@ -14,8 +15,9 @@ const JobContainer = () => {
         dispatch(fetchJobs(filter));
     },[dispatch, filter]);
 
-    return <div>{jobStatus}
-    {jobs.map(job => <div key={job.id}>{job.id} </div>)}</div>
+    return <>
+      <JobList jobs={jobs} />
+    </>
 }
 
 export default JobContainer;
