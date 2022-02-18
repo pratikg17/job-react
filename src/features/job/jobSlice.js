@@ -1,31 +1,35 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+import { baseUrl } from "../../config";
+
 const initialState = {
   jobs: [],
   status: "idle",
   error: null,
 };
 
-/* const action = (data) => (dispatch) => { //
-    perform http after 
-    dispatch({
-        type, payload
-    })
+/* 
+const action = (data)  => (dispatch) => {  
+    // perform http after 
+    dipatch({
+       type, payload
+     }) 
 }
+
 */
 
 export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async (filter) => {
   const { limit, offset } = filter;
   const response = await axios.get(
-    `http://localhost:5000/api/v1/jobs?limit=${limit}&offset=${offset}`
+    `${baseUrl}/api/v1/jobs?limit=${limit}&offset=${offset}`
   );
 
   return response.data.jobs;
 });
 
 export const jobSlice = createSlice({
-  name: "job",
+  name: "jobs",
   initialState,
   reducers: {}, // redux toolkit will create action for you
   extraReducers: {
@@ -34,8 +38,8 @@ export const jobSlice = createSlice({
       state.status = "loading";
     },
     [fetchJobs.fulfilled]: (state, action) => {
+      state.status = "succeeded";
       state.jobs = state.jobs.concat(action.payload);
-      state.status = "suceeded";
     },
     [fetchJobs.rejected]: (state, action) => {
       state.status = "failed";
