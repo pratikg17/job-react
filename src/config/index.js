@@ -1,8 +1,9 @@
 const urls = new Map();
 
 urls.set("localhost", "http://localhost:5000");
+// urls.set("localhost", "https://fastify-node-server.herokuapp.com");
 urls.set(
-  "job-react-udemy.herokuapp.com",
+  "job-react-server.herokuapp.com",
   "https://fastify-node-server.herokuapp.com"
 );
 
